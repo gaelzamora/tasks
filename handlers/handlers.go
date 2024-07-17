@@ -28,14 +28,12 @@ func Handlers(path string, method string, body string, headers map[string]string
 }
 
 func TaskProcess(body string, path string, method string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
-	if path == "task" {
 		switch method {
 		case "POST":
 			return routers.InsertTask(body)
 		case "PUT":
 			return routers.UpdateProduct(body, id)
 		}
-	}
 
 	return 400, "Method invalid"
 }
