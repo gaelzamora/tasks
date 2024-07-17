@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"strconv"
 	"tasks/routers"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -11,6 +12,7 @@ func Handlers(path string, method string, body string, headers map[string]string
 	fmt.Println("I'm going to proccess: "+path+" > "+method)
 
 	id := request.PathParameters["id"]
+	idn, _ := strconv.Atoi(id)
 
 	if len(path) < 4 {
 		fmt.Println(path)
@@ -19,17 +21,19 @@ func Handlers(path string, method string, body string, headers map[string]string
 
 	switch path[0:4] {
 	case "task":
-		return TaskProcess(body, path, method, id, request)
+		return TaskProcess(body, path, method, idn, request)
 	}
 
 	return 400, "Method invalid"
 }
 
-func TaskProcess(body string, path string, method string, id string, request events.APIGatewayV2HTTPRequest) (int, string) {
+func TaskProcess(body string, path string, method string, id int, request events.APIGatewayV2HTTPRequest) (int, string) {
 	if path == "task" {
 		switch method {
 		case "POST":
 			return routers.InsertTask(body)
+		case "PUT":
+			return routers.UpdateProduct(body, id)
 		}
 	}
 
