@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"tasks/models"
 	"tasks/tools"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func InsertTask(t models.Task) (int64, error) {

@@ -6,6 +6,7 @@ import (
 	"os"
 	"tasks/models"
 	"tasks/secrets"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var SecretModel models.SecretRDSJson
