@@ -19,14 +19,17 @@ func ReadSecret() error {
 }
 
 func DbConnect() error {
+	fmt.Println(Db)
 	Db, err = sql.Open("mysql", ConStr(SecretModel))
 	if err != nil {
+		fmt.Print("There's an error")
 		fmt.Println(err.Error())
 		return err
 	}
 
 	err = Db.Ping()
 	if err != nil {
+		fmt.Println("There's other error")
 		fmt.Println(err.Error())
 		return err
 	}
