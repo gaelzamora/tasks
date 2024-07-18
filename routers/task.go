@@ -93,3 +93,13 @@ func SelectTasks(request events.APIGatewayV2HTTPRequest) (int, string) {
 
 	return 200, string(Task)
 }
+
+func DeleteTask(id int) (int, string) {
+	err := database.DeleteTask(id)
+
+	if err != nil {
+		return 400, "Error to Delete task"+err.Error()
+	}
+
+	return 200, "DeleteTask OK"
+}

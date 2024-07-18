@@ -35,6 +35,8 @@ func TaskProcess(body string, path string, method string, id int, request events
 			return routers.UpdateProduct(body, id)
 		case "GET":
 			return routers.SelectTasks(request)
+		case "DELETE":
+			return routers.DeleteTask(id)
 		}
 
 	return 400, "Method invalid"
