@@ -21,6 +21,7 @@ func Handlers(path string, method string, body string, headers map[string]string
 
 	switch path[0:4] {
 	case "task":
+		fmt.Println("To Task")
 		return TaskProcess(body, path, method, idn, request)
 	}
 
