@@ -97,6 +97,7 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	defer Db.Close()
 
 	fmt.Println(strconv.Itoa(t.TaskID))
+	fmt.Println(choice)
 
 	var sentence string
 	var sentenceCount string
@@ -111,6 +112,7 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 
 	rows, err := Db.Query(sentenceCount)
 	if err != nil {
+		fmt.Println("there's an error")
 		return Resp, err
 	}
 	defer rows.Close()
@@ -119,6 +121,7 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	var regi sql.NullInt32
 	err = rows.Scan(&regi)
 	if err != nil {
+		fmt.Println("There's an other error")
 		return Resp, err
 	}
 
@@ -137,6 +140,8 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	}
 
 	var orderBy string
+
+	fmt.Println(orderField)
 	if len(orderField) > 0 {
 		switch orderField {
 		case "I":
@@ -149,7 +154,7 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 			orderBy = " ORDER BY is_done "	
 		}
 		if orderType == "D" {
-			orderBy += " DESD"
+			orderBy += " DESC"
 		}
 	}
 
