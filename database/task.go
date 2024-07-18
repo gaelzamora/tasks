@@ -96,6 +96,8 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	}
 	defer Db.Close()
 
+	fmt.Println(strconv.Itoa(t.TaskID))
+
 	var sentence string
 	var sentenceCount string
 	var where, limit string
@@ -106,8 +108,6 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	}
 
 	sentenceCount += where
-
-	fmt.Println("Consult is "+sentence)
 
 	rows, err := Db.Query(sentenceCount)
 	if err != nil {
@@ -155,7 +155,7 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 
 	sentence += where + orderBy + limit
 
-	fmt.Println(sentence)
+	fmt.Println("La sentencia es: "+sentence)
 
 	rows, err = Db.Query(sentence)
 	if err != nil {
