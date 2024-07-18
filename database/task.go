@@ -203,11 +203,18 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 }
 
 func DeleteTask(id int) error {
-	sentence := "DELETE FROM tasks WHERE Task_id = '"+strconv.Itoa(id)+"'"
-	_, err := Db.Exec(sentence)
 
+	err := DbConnect()
 	if err != nil {
 		return err
+	}
+	defer Db.Close()
+
+	sentence := "DELETE FROM tasks WHERE Task_id = '"+strconv.Itoa(id)+"'"
+	
+	_, err2 := Db.Exec(sentence)
+	if err2 != nil {
+		return err2
 	}
 
 	fmt.Println("Delete Task > Successful")
