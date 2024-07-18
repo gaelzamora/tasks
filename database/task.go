@@ -104,30 +104,35 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	var sentenceCount string
 	var where, limit string
 
+	sentence = "SELECT Task_Id, task_title, task_description, is_done FROM tasks "
+	sentenceCount = "SELECT count(*) as registers FROM tasks "
+
 	switch choice {
 	case "P":
-		where = "WHERE Task_Id = "+strconv.Itoa(t.TaskID)
+		where = " WHERE Task_Id = "+strconv.Itoa(t.TaskID)
 	}
 
 	sentenceCount += where
 	log.Println("Sentence Couint: "+sentenceCount)
 
-	rows, err := Db.Query(sentenceCount)
+	var rows *sql.Rows
+	rows, err = Db.Query(sentenceCount)
+	defer rows.Close()
+
 	if err != nil {
-		log.Println("there's an error")
 		return Resp, err
 	}
-	defer rows.Close()
+
 
 	rows.Next()
 	var regi sql.NullInt32
 	err = rows.Scan(&regi)
+	registers := int(regi.Int32)
+
 	if err != nil {
-		log.Println("There's an other error")
+		fmt.Println(err.Error())
 		return Resp, err
 	}
-
-	registers := int(regi.Int32)
 
 	if page > 0 {
 		if registers > pageSize {
