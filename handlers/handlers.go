@@ -33,6 +33,8 @@ func TaskProcess(body string, path string, method string, id int, request events
 			return routers.InsertTask(body)
 		case "PUT":
 			return routers.UpdateProduct(body, id)
+		case "GET":
+			return routers.SelectTasks(request)
 		}
 
 	return 400, "Method invalid"

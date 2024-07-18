@@ -15,3 +15,8 @@ type Task struct {
 	TaskDescription string `json:"taskDescription"`
 	TaskDone int `json:"taskDone"`
 }
+
+type TaskResp struct {
+	TotalItems int `json:"totalItems"`
+	Data []Task `json:"data"`
+}
