@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"strconv"
 	"tasks/models"
 	"tasks/tools"
@@ -96,8 +97,8 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	}
 	defer Db.Close()
 
-	fmt.Println(strconv.Itoa(t.TaskID))
-	fmt.Println(choice)
+	log.Println("ID: "+strconv.Itoa(t.TaskID))
+	log.Println("Choice: "+choice)
 
 	var sentence string
 	var sentenceCount string
@@ -109,10 +110,11 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	}
 
 	sentenceCount += where
+	log.Println("Sentence Couint: "+sentenceCount)
 
 	rows, err := Db.Query(sentenceCount)
 	if err != nil {
-		fmt.Println("there's an error")
+		log.Println("there's an error")
 		return Resp, err
 	}
 	defer rows.Close()
@@ -121,7 +123,7 @@ func SelectTask(t models.Task, choice string, page int, pageSize int, orderType 
 	var regi sql.NullInt32
 	err = rows.Scan(&regi)
 	if err != nil {
-		fmt.Println("There's an other error")
+		log.Println("There's an other error")
 		return Resp, err
 	}
 
